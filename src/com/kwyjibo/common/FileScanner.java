@@ -7,6 +7,6 @@ public class FileScanner {
 	}
 	
 	public void test(){
-		System.out.println("FileScanner: active");
+		System.out.println("FileScanner: active...");
 	}
 }
