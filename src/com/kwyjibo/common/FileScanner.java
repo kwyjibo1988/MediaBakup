@@ -18,7 +18,7 @@ public class FileScanner implements FileScannerImpl {
 	}
 	
 	public void test(){
-		//System.out.println("FileScanner: active...");
+		System.out.println("FileScanner: active...");
 	}
 
 	@Override
