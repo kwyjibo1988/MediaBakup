@@ -29,8 +29,8 @@ public class FileScanner implements FileScannerImpl {
 			Tag tag = f.getTag();
 			String artist = tag.getFirst(FieldKey.ARTIST);
 			String title = tag.getFirst(FieldKey.TITLE);
-			String album = tag.getFirst(FieldKey.ALBUM);
-			System.out.println(artist + "-" + album + " - " + title);
+			//String album = tag.getFirst(FieldKey.ALBUM);
+			//System.out.println(artist + "-" + album + " - " + title);
 		} catch (CannotReadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
