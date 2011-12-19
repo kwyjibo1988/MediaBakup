@@ -14,11 +14,11 @@ import org.jaudiotagger.tag.TagException;
 public class FileScanner implements FileScannerImpl {
 
 	public FileScanner(String args){
-		getTagData(args);
+		//getTagData(args);
 	}
 	
 	public void test(){
-		System.out.println("FileScanner: active...");
+		//System.out.println("FileScanner: active...");
 	}
 
 	@Override
