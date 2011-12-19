@@ -48,4 +48,25 @@ public class FileScanner implements FileScannerImpl {
 			e.printStackTrace();
 		}
 	}
+	
+	private void listDirectories(String path){
+		File dir = new File(path);
+		if (!dir.exists() || !dir.isDirectory()){
+			System.out.println("\nThat directory doesn't exist");
+		} else {
+			System.out.println("\nListing directory tree of: ");
+			System.out.println(dir.getPath());
+			listDirectories(dir, " ");
+		}
+	}
+	
+	private void listDirectories(File dir, String indent){
+		File[] dirs = dir.listFiles();
+		for (File f : dirs){
+			if (f.isDirectory()){
+				System.out.println(indent + f.getName());
+				listDirectories(f, indent + " ");
+			}
+		}
+	}	
 }
