@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class DirectoryScanner implements DirectoryLister {
+public class DirectoryScanner implements Scanner {
 	private int directoryCount = 0;
 	List<File> directories = new ArrayList<>();
 	
@@ -35,7 +35,6 @@ public class DirectoryScanner implements DirectoryLister {
 			System.out.println("Scanning: " + dir.getPath());
 			listDirectories(dir, " ");
 		}
-		//printDirectories();
 	}
 	
 	@Override

@@ -2,7 +2,7 @@ package com.kwyjibo.directory.util;
 
 import java.io.File;
 
-public interface DirectoryLister {
+public interface Scanner {
 	
 	void listDirectories(String path);
 	
