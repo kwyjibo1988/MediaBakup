@@ -1,10 +1,22 @@
 package com.kwyjibo.directory.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class DirectoryScanner implements DirectoryLister {
 	private int directoryCount = 0;
+	List<String> directories = new ArrayList<>();
+	
+	public DirectoryScanner() {
+		
+	}
+
+	public List<String> getDirectories() {
+		return directories;
+	}
 
 	public int getDirectoryCount() {
 		return directoryCount;
@@ -12,10 +24,6 @@ public class DirectoryScanner implements DirectoryLister {
 
 	public void setDirectoryCount() {
 		this.directoryCount++;
-	}
-
-	public DirectoryScanner() {
-	
 	}
 
 	@Override
@@ -27,7 +35,7 @@ public class DirectoryScanner implements DirectoryLister {
 			System.out.println("Scanning: " + dir.getPath());
 			listDirectories(dir, " ");
 		}
-		System.out.println("Directory count: " + getDirectoryCount());
+		printDirectories();
 	}
 	
 	@Override
@@ -36,9 +44,22 @@ public class DirectoryScanner implements DirectoryLister {
 		for (File f : dirs){
 			if (f.isDirectory()){
 				setDirectoryCount();
+				String dp = f.getPath();
+				directories.add(dp);
 				//System.out.println(indent + f.getPath());
 				listDirectories(f, indent + " ");
 			}
 		}
+	}
+	
+	public void printDirectories(){
+		Iterator<String> e = directories.iterator();
+		while (e.hasNext()){
+			String path = e.next();
+			System.out.println(path);
+		}
+		System.out.println("-------------------------------------");
+		System.out.println("Directories counted: " + getDirectoryCount());
+		System.out.println("Directories stored: " + directories.size());	
 	}
 }
