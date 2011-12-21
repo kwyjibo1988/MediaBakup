@@ -8,13 +8,13 @@ import java.util.List;
 
 public class DirectoryScanner implements DirectoryLister {
 	private int directoryCount = 0;
-	List<String> directories = new ArrayList<>();
+	List<File> directories = new ArrayList<>();
 	
 	public DirectoryScanner() {
 		
 	}
 
-	public List<String> getDirectories() {
+	public List<File> getDirectories() {
 		return directories;
 	}
 
@@ -35,7 +35,7 @@ public class DirectoryScanner implements DirectoryLister {
 			System.out.println("Scanning: " + dir.getPath());
 			listDirectories(dir, " ");
 		}
-		printDirectories();
+		//printDirectories();
 	}
 	
 	@Override
@@ -44,18 +44,18 @@ public class DirectoryScanner implements DirectoryLister {
 		for (File f : dirs){
 			if (f.isDirectory()){
 				setDirectoryCount();
-				String dp = f.getPath();
-				directories.add(dp);
+				directories.add(f);
 				//System.out.println(indent + f.getPath());
 				listDirectories(f, indent + " ");
 			}
 		}
 	}
 	
+	@Override
 	public void printDirectories(){
-		Iterator<String> e = directories.iterator();
+		Iterator<File> e = directories.iterator();
 		while (e.hasNext()){
-			String path = e.next();
+			String path = e.next().getPath();
 			System.out.println(path);
 		}
 		System.out.println("-------------------------------------");
