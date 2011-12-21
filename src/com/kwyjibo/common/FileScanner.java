@@ -11,14 +11,10 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
-public class FileScanner implements FileScannerImpl {
+public class FileScanner implements DirectoryScanner {
 
 	public FileScanner(String args){
-		//getTagData(args);
-	}
-	
-	public void test(){
-		//System.out.println("FileScanner: active...");
+		listDirectories(args);
 	}
 
 	@Override
@@ -29,8 +25,7 @@ public class FileScanner implements FileScannerImpl {
 			Tag tag = f.getTag();
 			String artist = tag.getFirst(FieldKey.ARTIST);
 			String title = tag.getFirst(FieldKey.TITLE);
-			//String album = tag.getFirst(FieldKey.ALBUM);
-			//System.out.println(artist + "-" + album + " - " + title);
+			
 		} catch (CannotReadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,7 +59,7 @@ public class FileScanner implements FileScannerImpl {
 		File[] dirs = dir.listFiles();
 		for (File f : dirs){
 			if (f.isDirectory()){
-				System.out.println(indent + f.getName());
+				System.out.println(indent + f.getPath());
 				listDirectories(f, indent + " ");
 			}
 		}

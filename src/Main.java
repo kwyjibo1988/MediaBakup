@@ -5,8 +5,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		FileScanner f = new FileScanner(args[0]);
-		f.test();
-		DataStore ds = new DataStore();
+		//DataStore ds = new DataStore();
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.kwyjibo.common;
 
-public interface FileScannerImpl {
+public interface DirectoryScanner {
 	
 	void getTagData(String  file);	
 }
