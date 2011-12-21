@@ -1,5 +1,6 @@
 import com.kwyjibo.directory.util.DirectoryScanner;
 import com.kwyjibo.file.scanner.util.FileScanner;
+import com.kwyjibo.file.tagger.util.FileTagger;
 
 public class Main {
 
@@ -8,7 +9,8 @@ public class Main {
 		ds.listDirectories(args[0]);
 		FileScanner fs = new FileScanner();
 		fs.listFiles(ds.getDirectories());
-		fs.printFiles();
+		FileTagger ft = new FileTagger();
+		ft.getMusicTags(fs.getFiles());
 	}
 
 }

@@ -2,6 +2,8 @@ package com.kwyjibo.file.tagger.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -13,33 +15,35 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
 
-public class FileTagger implements TagExtractor {
+public class FileTagger implements Tagger {
+	private String artist, title, album;
 
 	@Override
-	public void getTagData(String file) {
-		File fl = new File(file);
+	public void getTagData(File file) {
 		try {
-			AudioFile f = AudioFileIO.read(fl);
+			AudioFile f = AudioFileIO.read(file);
 			Tag tag = f.getTag();
-			String artist = tag.getFirst(FieldKey.ARTIST);
-			String title = tag.getFirst(FieldKey.TITLE);
-			
+			artist = tag.getFirst(FieldKey.ARTIST);
+			title = tag.getFirst(FieldKey.TITLE);
+			album = tag.getFirst(FieldKey.ALBUM);
 		} catch (CannotReadException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TagException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ReadOnlyFileException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidAudioFrameException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	public void getMusicTags(List<File> files) {
+		Iterator<File> e = files.iterator();
+		while (e.hasNext()){
+			getTagData(e.next());
+		}
+	}
 }
