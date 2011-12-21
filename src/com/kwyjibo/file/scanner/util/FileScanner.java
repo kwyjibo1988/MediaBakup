@@ -1,8 +1,15 @@
 package com.kwyjibo.file.scanner.util;
 
-public class FileScanner {
+import java.util.List;
 
-	public FileScanner(String args){
+public class FileScanner implements Scanner {
+
+	public FileScanner(){
 		
-	}	
+	}
+
+	@Override
+	public void listFiles(List<String> directories) {
+		// TODO Auto-generated method stub
+	}
 }
