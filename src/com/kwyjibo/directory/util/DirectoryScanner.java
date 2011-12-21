@@ -4,9 +4,18 @@ import java.io.File;
 
 
 public class DirectoryScanner implements DirectoryLister {
+	private int directoryCount = 0;
 
-	public DirectoryScanner(String string) {
-		listDirectories(string);
+	public int getDirectoryCount() {
+		return directoryCount;
+	}
+
+	public void setDirectoryCount() {
+		this.directoryCount++;
+	}
+
+	public DirectoryScanner() {
+	
 	}
 
 	@Override
@@ -15,10 +24,10 @@ public class DirectoryScanner implements DirectoryLister {
 		if (!dir.exists() || !dir.isDirectory()){
 			System.out.println("\nThat directory doesn't exist");
 		} else {
-			System.out.println("\nListing directory tree of: ");
-			System.out.println(dir.getPath());
+			System.out.println("Scanning: " + dir.getPath());
 			listDirectories(dir, " ");
 		}
+		System.out.println("Directory count: " + getDirectoryCount());
 	}
 	
 	@Override
@@ -26,10 +35,10 @@ public class DirectoryScanner implements DirectoryLister {
 		File[] dirs = dir.listFiles();
 		for (File f : dirs){
 			if (f.isDirectory()){
-				System.out.println(indent + f.getPath());
+				setDirectoryCount();
+				//System.out.println(indent + f.getPath());
 				listDirectories(f, indent + " ");
 			}
 		}
 	}
-
 }
