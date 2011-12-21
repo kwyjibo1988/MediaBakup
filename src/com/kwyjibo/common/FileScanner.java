@@ -12,38 +12,12 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
 public class FileScanner implements DirectoryScanner {
+	private int directoryCount = 0;
 
 	public FileScanner(String args){
 		listDirectories(args);
 	}
 
-	@Override
-	public void getTagData(String file) {
-		File fl = new File(file);
-		try {
-			AudioFile f = AudioFileIO.read(fl);
-			Tag tag = f.getTag();
-			String artist = tag.getFirst(FieldKey.ARTIST);
-			String title = tag.getFirst(FieldKey.TITLE);
-			
-		} catch (CannotReadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TagException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ReadOnlyFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidAudioFrameException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	private void listDirectories(String path){
 		File dir = new File(path);
 		if (!dir.exists() || !dir.isDirectory()){
