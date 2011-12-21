@@ -1,4 +1,4 @@
-package com.kwyjibo.database;
+package com.kwyjibo.database.util;
 
 import java.net.UnknownHostException;
 

@@ -1,11 +1,10 @@
-import com.kwyjibo.common.FileScanner;
-import com.kwyjibo.database.DataStore;
+import com.kwyjibo.directory.util.DirectoryScanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-		FileScanner f = new FileScanner(args[0]);
-		//DataStore ds = new DataStore();
+		DirectoryScanner ds = new DirectoryScanner(args[0]);
+		
 	}
 
 }

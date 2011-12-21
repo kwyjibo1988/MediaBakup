@@ -1,4 +1,4 @@
-package com.kwyjibo.common;
+package com.kwyjibo.file.tagger.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,8 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
-public class FileTaggerImpl implements FileTagger {
+
+public class FileTagger implements TagExtractor {
 
 	@Override
 	public void getTagData(String file) {
