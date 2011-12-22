@@ -1,6 +1,7 @@
 package com.kwyjibo.file.copier.util;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -36,14 +37,18 @@ public class FileCopier implements Copier {
 
 	@Override
 	public void copyFile() throws IOException {
-		
 		Iterator<MusicFile> e = songs.iterator();
 		while (e.hasNext()){
 			MusicFile mf = e.next();
 			Path source = Paths.get(mf.getPath());
-			Path target = Paths.get(this.destination);
-			Files.copy(source, target, COPY_ATTRIBUTES);
+			Path target = Paths.get(this.destination + mf.getFilename());
+			if (Files.exists(Paths.get(this.destination)) 
+					&& Files.isDirectory(Paths.get(this.destination), LinkOption.NOFOLLOW_LINKS)){
+				Files.copy(source, target, REPLACE_EXISTING);
+			} else {
+				Files.createDirectory(Paths.get(this.destination));
+				Files.copy(source, target);
+			}
 		}
-		
 	}
 }

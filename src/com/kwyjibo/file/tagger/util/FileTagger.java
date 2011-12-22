@@ -19,7 +19,7 @@ import com.kwyjibo.file.creator.util.MusicFile;
 
 
 public class FileTagger implements Tagger {
-	private String artist, title, album, path;
+	private String artist, title, album, path, filename;
 	private List<MusicFile> songs = new ArrayList<>();
 	
 	@Override
@@ -31,7 +31,8 @@ public class FileTagger implements Tagger {
 			title = tag.getFirst(FieldKey.TITLE);
 			album = tag.getFirst(FieldKey.ALBUM);
 			path = file.getPath();
-			MusicFile mf = new MusicFile(album, artist, title, path);
+			filename = file.getName();
+			MusicFile mf = new MusicFile(album, artist, title, path, filename);
 			songs.add(mf);			
 		} catch (CannotReadException e) {
 			e.printStackTrace();
