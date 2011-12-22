@@ -9,4 +9,6 @@ public interface Tagger {
 	void getTagData(File file);
 	
 	void getMusicTags(List<File> files);
+	
+	void printSongs();
 }

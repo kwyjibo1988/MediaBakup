@@ -2,6 +2,7 @@ package com.kwyjibo.file.tagger.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,10 +15,13 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
+import com.kwyjibo.file.creator.util.MusicFile;
+
 
 public class FileTagger implements Tagger {
 	private String artist, title, album;
-
+	private List<MusicFile> songs = new ArrayList<>();
+	
 	@Override
 	public void getTagData(File file) {
 		try {
@@ -26,6 +30,8 @@ public class FileTagger implements Tagger {
 			artist = tag.getFirst(FieldKey.ARTIST);
 			title = tag.getFirst(FieldKey.TITLE);
 			album = tag.getFirst(FieldKey.ALBUM);
+			MusicFile mf = new MusicFile(album, artist, title);
+			songs.add(mf);			
 		} catch (CannotReadException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -46,4 +52,17 @@ public class FileTagger implements Tagger {
 			getTagData(e.next());
 		}
 	}
+
+	@Override
+	public void printSongs() {
+		Iterator<MusicFile> e = songs.iterator();
+		while (e.hasNext()){
+			MusicFile mf = e.next();
+			System.out.println(mf.getArtist() + " " + mf.getTitle() + " " + mf.getAlbum());
+		}
+		System.out.println("-------------------------------------");
+		System.out.println("Music files stored: " + songs.size());
+	}
+	
+	
 }

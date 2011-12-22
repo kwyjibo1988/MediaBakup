@@ -11,6 +11,7 @@ public class Main {
 		fs.listFiles(ds.getDirectories());
 		FileTagger ft = new FileTagger();
 		ft.getMusicTags(fs.getFiles());
+		ft.printSongs();
 	}
 
 }

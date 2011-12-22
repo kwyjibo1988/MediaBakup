@@ -51,7 +51,6 @@ public class FileScanner implements Scanner {
 		while (e.hasNext()){
 			System.out.println(e.next().getName());
 		}
-		
 		System.out.println("-------------------------------------");
 		System.out.println("Files counted: " + getFileCount());
 		System.out.println("Files stored: " + files.size());
