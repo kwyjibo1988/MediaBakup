@@ -49,7 +49,7 @@ public class FileCopier implements Copier {
 		        	if (createAlbumDirectory(albumDir)){
 		        		Path source = Paths.get(mf.getPath());
 				        Path target = Paths.get(albumDir + File.separator + mf.getFilename());
-				        Files.copy(source, target, REPLACE_EXISTING);
+				        Files.copy(source, target);
 		        	}
 		        }
 		    }
@@ -97,10 +97,4 @@ public class FileCopier implements Copier {
 		}
 		return exists;
 	}
-	
-	
-	
-	
-	
-	
 }
