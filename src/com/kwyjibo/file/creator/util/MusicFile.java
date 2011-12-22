@@ -1,7 +1,7 @@
 package com.kwyjibo.file.creator.util;
 
 public class MusicFile {
-	private String album, artist, title, path, filename;
+	private String album, artist, title, path, filename, albumArtist;
 	
 	public String getPath() {
 		return path;
@@ -16,7 +16,8 @@ public class MusicFile {
 		this.artist = data[1];
 		this.title = data[2];
 		this.path = data[3];
-		this.setFilename(data[4]);
+		this.filename = data[4];
+		this.albumArtist = data[5];
 	}
 
 	public String getAlbum() {
@@ -37,5 +38,13 @@ public class MusicFile {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public String getAlbumArtist() {
+		return albumArtist;
+	}
+
+	public void setAlbumArtist(String albumArtist) {
+		this.albumArtist = albumArtist;
 	}
 }

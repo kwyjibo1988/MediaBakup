@@ -19,7 +19,7 @@ import com.kwyjibo.file.creator.util.MusicFile;
 
 
 public class FileTagger implements Tagger {
-	private String artist, title, album, path, filename;
+	private String artist, title, album, path, filename, albumArtist;
 	private List<MusicFile> songs = new ArrayList<>();
 	
 	@Override
@@ -32,7 +32,8 @@ public class FileTagger implements Tagger {
 			album = tag.getFirst(FieldKey.ALBUM);
 			path = file.getPath();
 			filename = file.getName();
-			MusicFile mf = new MusicFile(album, artist, title, path, filename);
+			albumArtist = tag.getFirst(FieldKey.ALBUM_ARTIST);
+			MusicFile mf = new MusicFile(album, artist, title, path, filename, albumArtist);
 			songs.add(mf);			
 		} catch (CannotReadException e) {
 			e.printStackTrace();
@@ -60,7 +61,8 @@ public class FileTagger implements Tagger {
 		Iterator<MusicFile> e = songs.iterator();
 		while (e.hasNext()){
 			MusicFile mf = e.next();
-			System.out.println(mf.getArtist() + " " + mf.getTitle() + " " + mf.getAlbum() + " " + mf.getPath());
+			System.out.println(mf.getArtist() + " " + mf.getTitle() + " "
+					+ mf.getAlbum() + " " + mf.getPath() + " " + mf.getAlbumArtist());
 		}
 		System.out.println("-------------------------------------");
 		System.out.println("Music files stored: " + songs.size());

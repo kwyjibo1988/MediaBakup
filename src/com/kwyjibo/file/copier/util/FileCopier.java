@@ -1,4 +1,5 @@
 package com.kwyjibo.file.copier.util;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -37,18 +38,38 @@ public class FileCopier implements Copier {
 
 	@Override
 	public void copyFile() throws IOException {
-		Iterator<MusicFile> e = songs.iterator();
-		while (e.hasNext()){
-			MusicFile mf = e.next();
-			Path source = Paths.get(mf.getPath());
-			Path target = Paths.get(this.destination + mf.getFilename());
-			if (Files.exists(Paths.get(this.destination)) 
-					&& Files.isDirectory(Paths.get(this.destination), LinkOption.NOFOLLOW_LINKS)){
-				Files.copy(source, target, REPLACE_EXISTING);
-			} else {
-				Files.createDirectory(Paths.get(this.destination));
-				Files.copy(source, target);
-			}
-		}
+	    Iterator<MusicFile> e = songs.iterator();
+	    while (e.hasNext()){
+	        MusicFile mf = e.next();
+	        Path source = Paths.get(mf.getPath());
+	        Path target = Paths.get(this.destination + mf.getFilename());
+	        if (Files.exists(Paths.get(this.destination)) && Files.isDirectory(Paths.get(this.destination), LinkOption.NOFOLLOW_LINKS)){
+	            Files.copy(source, target, REPLACE_EXISTING);
+	        } else {
+	            Files.createDirectory(Paths.get(this.destination));
+	            Files.copy(source, target);
+	        }
+	    }
 	}
+	
+	public boolean createMasterDirectory(Path masterDir) throws IOException{
+		boolean exists =false;
+		if (Files.exists(masterDir)
+				&& Files.isDirectory((masterDir), LinkOption.NOFOLLOW_LINKS)){
+			System.out.println("Directory exists");
+			exists = true;
+		} else {
+			Files.createDirectory(masterDir);
+			System.out.println("Directory created");
+			exists = true;
+		}
+		return exists;
+		
+	}
+	
+	
+	
+	
+	
+	
 }
