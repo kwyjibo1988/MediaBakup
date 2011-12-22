@@ -38,33 +38,64 @@ public class FileCopier implements Copier {
 
 	@Override
 	public void copyFile() throws IOException {
-	    Iterator<MusicFile> e = songs.iterator();
-	    while (e.hasNext()){
-	        MusicFile mf = e.next();
-	        Path source = Paths.get(mf.getPath());
-	        Path target = Paths.get(this.destination + mf.getFilename());
-	        if (Files.exists(Paths.get(this.destination)) && Files.isDirectory(Paths.get(this.destination), LinkOption.NOFOLLOW_LINKS)){
-	            Files.copy(source, target, REPLACE_EXISTING);
-	        } else {
-	            Files.createDirectory(Paths.get(this.destination));
-	            Files.copy(source, target);
-	        }
-	    }
+		Path masterDir = Paths.get(this.destination);
+		if (createMasterDirectory(masterDir)){
+		    Iterator<MusicFile> e = songs.iterator();
+		    while (e.hasNext()){
+		        MusicFile mf = e.next();
+		        Path albumArtistDir = Paths.get(this.destination + mf.getAlbumArtist());
+		        Path albumDir = Paths.get(albumArtistDir.toString() + File.separator + mf.getAlbum());
+		        if (createAlbumArtistDirectory(albumArtistDir)){
+		        	if (createAlbumDirectory(albumDir)){
+		        		Path source = Paths.get(mf.getPath());
+				        Path target = Paths.get(albumDir + File.separator + mf.getFilename());
+				        Files.copy(source, target, REPLACE_EXISTING);
+		        	}
+		        }
+		    }
+		}
 	}
 	
+	@Override
 	public boolean createMasterDirectory(Path masterDir) throws IOException{
-		boolean exists =false;
+		boolean exists = false;
 		if (Files.exists(masterDir)
 				&& Files.isDirectory((masterDir), LinkOption.NOFOLLOW_LINKS)){
-			System.out.println("Directory exists");
+			System.out.println("Master directory exists");
 			exists = true;
 		} else {
 			Files.createDirectory(masterDir);
-			System.out.println("Directory created");
+			System.out.println("Master directory created");
 			exists = true;
 		}
 		return exists;
-		
+	}
+	
+	@Override
+	public boolean createAlbumArtistDirectory(Path targetDir) throws IOException{
+		boolean exists = false;
+		if (Files.exists(targetDir) && Files.isDirectory((targetDir), LinkOption.NOFOLLOW_LINKS)){
+			exists = true;
+			System.out.println("Target directory exists");
+		} else {
+			Files.createDirectory(targetDir);
+			exists = true;
+			System.out.println("Target directory created");
+		}
+		return exists;
+	}
+	
+	public boolean createAlbumDirectory(Path targetDir) throws IOException{
+		boolean exists = false;
+		if (Files.exists(targetDir) && Files.isDirectory((targetDir), LinkOption.NOFOLLOW_LINKS)){
+			exists = true;
+			System.out.println("Album directory exists");
+		} else {
+			Files.createDirectory(targetDir);
+			exists = true;
+			System.out.println("Album directory created");
+		}
+		return exists;
 	}
 	
 	
