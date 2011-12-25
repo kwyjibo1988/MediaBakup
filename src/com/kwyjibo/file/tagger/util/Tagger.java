@@ -11,4 +11,6 @@ public interface Tagger {
 	void getMusicTags(List<File> files);
 	
 	void printSongs();
+	
+	void printFailedSongs();
 }

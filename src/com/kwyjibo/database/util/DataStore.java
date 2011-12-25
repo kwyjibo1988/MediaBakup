@@ -1,54 +1,50 @@
 package com.kwyjibo.database.util;
 
 import java.net.UnknownHostException;
+import java.util.Iterator;
+import java.util.List;
 
+import com.kwyjibo.file.creator.util.MusicFile;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
-public class DataStore {
+public class DataStore implements Database {
 	private DB db;
+	private DBCollection coll;
 	
 	public DataStore() {
 		try {
 			connect();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MongoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		insertObject();
 	}
 	
-	private void connect() throws UnknownHostException, MongoException{
+	@Override
+	public void connect() throws UnknownHostException, MongoException{
 		Mongo m = new Mongo();
-		db = m.getDB("mydb");
-	}
-	
-	private void insertObject(){
-		DBCollection coll = db.getCollection("testCollection");
-		BasicDBObject doc = new BasicDBObject();
-
-        doc.put("name", "MongoDB");
-        doc.put("type", "database");
-        doc.put("count", 1);
-
-        BasicDBObject info = new BasicDBObject();
-
-        info.put("x", 203);
-        info.put("y", 102);
-
-        doc.put("info", info);
-
-        coll.insert(doc);
-        
-        DBObject myDoc = coll.findOne();
-        System.out.println(myDoc);
+		db = m.getDB("failed");
+		coll = db.getCollection("failedFiles");
 	}
 
+	@Override
+	public void populateFailed(List<MusicFile> failed) {		
+		Iterator<MusicFile> e = failed.iterator();
+		while (e.hasNext()){
+			MusicFile mf = e.next();
+			BasicDBObject doc = new BasicDBObject();
+			doc.put("artist", mf.getArtist());
+			doc.put("albumArtist", mf.getAlbumArtist());
+			doc.put("title", mf.getTitle());
+			doc.put("album", mf.getAlbum());
+			doc.put("path", mf.getPath());
+			doc.put("fileName", mf.getFilename());
+			coll.insert(doc);
+		}
+	}
 }

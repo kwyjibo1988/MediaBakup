@@ -21,6 +21,12 @@ import com.kwyjibo.file.creator.util.MusicFile;
 public class FileTagger implements Tagger {
 	private String artist, title, album, path, filename, albumArtist;
 	private List<MusicFile> songs = new ArrayList<>();
+	private List<MusicFile> failed = new ArrayList<>();
+	
+	public FileTagger(){
+		
+	}
+	
 	@Override
 	public void getTagData(File file) {
 		try {
@@ -32,11 +38,12 @@ public class FileTagger implements Tagger {
 			path = file.getPath();
 			filename = file.getName();
 			albumArtist = tag.getFirst(FieldKey.ALBUM_ARTIST);
+			MusicFile mf = new MusicFile(album, artist, title, path, filename, albumArtist);
 			if (!albumArtist.equals("")){
-				MusicFile mf = new MusicFile(album, artist, title, path, filename, albumArtist);
 				songs.add(mf);
 			} else {
-				System.out.println("File: " + file.getAbsolutePath() + " did not contain album artist");
+				failed.add(mf);
+				//System.out.println("File: " + file.getAbsolutePath() + " did not contain album artist");
 			}
 		} catch (CannotReadException e) {
 			e.printStackTrace();
@@ -70,12 +77,26 @@ public class FileTagger implements Tagger {
 		System.out.println("-------------------------------------");
 		System.out.println("Music files stored: " + songs.size());
 	}
+	
+	
 
 	public List<MusicFile> getSongs() {
 		return songs;
 	}
 	
-	public FileTagger(){
-		
+	public List<MusicFile> getFailed() {
+		return failed;
+	}
+
+	@Override
+	public void printFailedSongs() {
+		Iterator<MusicFile> e = failed.iterator();
+		System.out.println("\nFailed files:");
+		while (e.hasNext()){
+			MusicFile mf = e.next();
+			System.out.println(mf.getPath());
+		}
+		System.out.println("-------------------------------------");
+		System.out.println("Music files failed: " + failed.size());
 	}
 }
