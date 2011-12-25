@@ -2,6 +2,9 @@ package com.kwyjibo.directory.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class DirectoryScanner implements Scanner {
 			if (f.isDirectory()){
 				setDirectoryCount();
 				directories.add(f);
-				//System.out.println(indent + f.getPath());
+				System.out.println(indent + " " + f.getAbsolutePath() + " " + f.lastModified());
 				listDirectories(f, indent + " ");
 			}
 		}
@@ -60,5 +63,5 @@ public class DirectoryScanner implements Scanner {
 		System.out.println("-------------------------------------");
 		System.out.println("Directories counted: " + getDirectoryCount());
 		System.out.println("Directories stored: " + directories.size());	
-	}
+	}	 
 }

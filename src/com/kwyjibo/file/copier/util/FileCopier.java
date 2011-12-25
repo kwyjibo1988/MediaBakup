@@ -1,6 +1,7 @@
 package com.kwyjibo.file.copier.util;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -48,7 +49,11 @@ public class FileCopier implements Copier {
 		        	if (createAlbumDirectory(albumDir)){
 		        		Path source = Paths.get(mf.getPath());
 				        Path target = Paths.get(albumDir + File.separator + mf.getFilename());
-				        Files.copy(source, target);
+				        try {
+				        	Files.copy(source, target);
+				        } catch (FileAlreadyExistsException ex) {
+				        	System.out.println("File: '" + mf.getFilename() + "' already exists.");
+				        }
 		        	}
 		        }
 		    }
@@ -75,11 +80,11 @@ public class FileCopier implements Copier {
 		boolean exists = false;
 		if (Files.exists(targetDir) && Files.isDirectory((targetDir), LinkOption.NOFOLLOW_LINKS)){
 			exists = true;
-			System.out.println("Target directory exists");
+			//System.out.println("Target directory exists");
 		} else {
 			Files.createDirectory(targetDir);
 			exists = true;
-			System.out.println("Target directory created");
+			//System.out.println("Target directory created");
 		}
 		return exists;
 	}
@@ -88,11 +93,11 @@ public class FileCopier implements Copier {
 		boolean exists = false;
 		if (Files.exists(targetDir) && Files.isDirectory((targetDir), LinkOption.NOFOLLOW_LINKS)){
 			exists = true;
-			System.out.println("Album directory exists");
+			//System.out.println("Album directory exists");
 		} else {
 			Files.createDirectory(targetDir);
 			exists = true;
-			System.out.println("Album directory created");
+			//System.out.println("Album directory created");
 		}
 		return exists;
 	}
